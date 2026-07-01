@@ -41,6 +41,11 @@ jobs:
         strategy:
             matrix:
                 arch: [x64, ARM64]
+                include:
+                    - arch: x64
+                      rid: win-x64
+                    - arch: ARM64
+                      rid: win-arm64
         steps:
             - uses: actions/checkout@v6
             - name: Setup .NET 10
@@ -59,7 +64,7 @@ jobs:
                   restore-keys: |
                       ${{ runner.os }}-nuget-
             - name: Build Cef .NET Application (${{ matrix.arch }})
-              run: dotnet build Dotnet/VRCX-Cef.csproj -p:Configuration=Release -p:WarningLevel=0 -p:Platform=${{ matrix.arch }} -p:RestorePackagesConfig=true -t:"Restore;Clean;Build" -m -a ${{ matrix.arch }} --self-contained
+              run: dotnet build Dotnet/VRCX-Cef.csproj -p:Configuration=Release -p:WarningLevel=0 -p:Platform=${{ matrix.arch }} -p:RestorePackagesConfig=true -t:"Restore;Clean;Build" -m -r ${{ matrix.rid }} --self-contained
             - name: Check if we want to sign
               id: check_sign
               run: |
