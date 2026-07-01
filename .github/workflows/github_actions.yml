@@ -116,7 +116,7 @@ jobs:
               with:
                   script-file: Installer/installer.nsi
                   additional-plugin-paths: Installer/Plugins
-                  args: /DARCH=${{ matrix.arch }}
+                  arguments: /DARCH=${{ matrix.arch }}
             - name: Rename setup
               run: |
                   file_name="VRCX_${{ needs.set_version.outputs.version }}_${{ matrix.arch }}_Setup.exe"
